@@ -1,12 +1,19 @@
-# **It is a fork of Mastodon**
+(ja-JP)
+## **これは Mastodonのforkプロジェクトです**
+### Mastodon、多くの開発者たちに感謝。
 
-**Ruby on Rails** is used for the back-end, while **React.js** and Redux are used for the dynamic front-end. A static front-end for public resources (profiles and statuses) is also provided.
+---
+
+# Amane
+分散型メタバース「Chrolite」のオンラインサーバーです。
+ActivityPub と OStatusをベースとしたプロトコルで様々なSNSと連合を形成します。  
+ゲームクライアント、Web、各種Mastodonクライアントなどでゲーム内チャットに参加することができます。
 
 ---
 
 ## License
 
-Copyright (C) 2016-2018 Eugen Rochko & other Mastodon contributors & sanaehururu1200 & other Amane contributors (see AUTHORS_AMANE.md)
+Copyright (C) 2016-2018 Eugen Rochko & other Mastodon contributors (see AUTHORS.md) & Sakuragi Ayane(sanaehururu1200) & other Amane contributors (see AUTHORS_AMANE.md)
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
