@@ -36,6 +36,8 @@
 #  invite_id                 :bigint(8)
 #  remember_token            :string
 #  chosen_languages          :string           is an Array
+#  provider                  :string
+#  uid                       :string
 #
 
 class User < ApplicationRecord
@@ -55,7 +57,7 @@ class User < ApplicationRecord
 
   devise :pam_authenticatable if ENV['PAM_ENABLED'] == 'true'
 
-  devise :omniauthable
+  devise :omniauthable, { omniauth_providers: [:twitter] }
 
   belongs_to :account, inverse_of: :user
   belongs_to :invite, counter_cache: :uses, optional: true
@@ -341,5 +343,25 @@ class User < ApplicationRecord
 
   def needs_feed_update?
     last_sign_in_at < ACTIVE_DURATION.ago
+  end
+
+  def self.from_omniauth(auth)
+    uid = auth['uid']
+    provider = auth['provider']
+    email = auth['info']['email'] || ''
+    avator_url = auth['info']['image'] || ''
+    username = auth['uid']
+    display_name = auth['info']['name'] || auth['info']['nickname'] || username
+
+    user = find_or_create_by(provider: provider, uid: uid) do |user|
+      password = Devise.friendly_token[0,20]
+      user.email = email
+      user.password = password
+      user.password_confirmation = password
+      user.skip_confirmation!
+      user.create_account(username: username, display_name: display_name)
+      user.account.avatar_remote_url = avator_url if avator_url
+    end
+    user
   end
 end

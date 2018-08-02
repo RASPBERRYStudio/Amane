@@ -4,12 +4,12 @@
 - content_for :header_tags do
   = render partial: 'shared/og'
 
-= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+- if devise_mapping.omniauthable? and resource_class.omniauth_providers.any?
+  .simple_form.alternative-login
 
-  - if @invite.present? && @invite.autofollow?
-    .fields-group{ style: 'margin-bottom: 30px' }
-      %p.hint{ style: 'text-align: center' }= t('invites.invited_by')
-      = render 'authorize_follows/card', account: @invite.user.account
-      
-  %p.hint.subtle-hint=t('auth.agreement_html', rules_path: about_more_path, terms_path: terms_path)
+    .actions
+      - resource_class.omniauth_providers.each do |provider|
+        = link_to omniauth_authorize_path(resource_name, provider), class: "button button-#{provider}" do
+          = t("auth.providers.#{provider}", default: provider.to_s.chomp("_oauth2").capitalize)
+
 .form-footer= render 'auth/shared/links'

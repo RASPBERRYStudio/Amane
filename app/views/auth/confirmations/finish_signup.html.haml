@@ -8,7 +8,6 @@
         = msg
         %br
 
-  = f.input :email
-
+  = f.input :email, :as => :hidden
   .actions
-    = f.submit t('auth.confirm_email'), class: 'button'
+    = f.submit 'successfully!', class: 'button'
