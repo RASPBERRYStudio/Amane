@@ -26,3 +26,13 @@ require_relative 'block'
 # test1.load_or_create
 # test2 = Chunk.new("", 0, 2, 0, [])
 # test2.load_or_create
+
+require_relative "db"
+
+class Chunk < ActiveRecord::Base
+  @owner
+  @dx
+  @dy
+  @dz
+  @blocks
+end

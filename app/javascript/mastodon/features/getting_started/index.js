@@ -12,6 +12,7 @@ import { fetchFollowRequests } from '../../actions/accounts';
 import { List as ImmutableList } from 'immutable';
 import { Link } from 'react-router-dom';
 import NavigationBar from '../compose/components/navigation_bar';
+import env from '../../../../../amane.config';
 
 const messages = defineMessages({
   home_timeline: { id: 'tabs_bar.home', defaultMessage: 'Home' },
@@ -31,6 +32,8 @@ const messages = defineMessages({
   discover: { id: 'navigation_bar.discover', defaultMessage: 'Discover' },
   personal: { id: 'navigation_bar.personal', defaultMessage: 'Personal' },
   security: { id: 'navigation_bar.security', defaultMessage: 'Security' },
+  world: { id: 'navigation_bar.world', defaultMessage: 'World Chat' },
+  amane_fediverse: { id: 'navigation_bar.amane_fediverse', defaultMessage: 'Amane Federated timeline' }
 });
 
 const mapStateToProps = state => ({
@@ -80,16 +83,17 @@ export default class GettingStarted extends ImmutablePureComponent {
     const navItems = [];
     let i = 1;
     let height = (multiColumn) ? 0 : 60;
-
+    console.log(env);
     if (multiColumn) {
       navItems.push(
         <ColumnSubheading key={i++} text={intl.formatMessage(messages.discover)} />,
+        <ColumnLink key={i++} icon='comments' text={intl.formatMessage(messages.amane_fediverse)} to={'/timelines/tag/' + env.FEDIVERSE_TAG} />,
         <ColumnLink key={i++} icon='users' text={intl.formatMessage(messages.community_timeline)} to='/timelines/public/local' />,
         <ColumnLink key={i++} icon='globe' text={intl.formatMessage(messages.public_timeline)} to='/timelines/public' />,
         <ColumnSubheading key={i++} text={intl.formatMessage(messages.personal)} />
       );
 
-      height += 34*2 + 48*2;
+      height += 34*2 + 48*3;
     }
 
     navItems.push(
